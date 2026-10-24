@@ -492,16 +492,27 @@
 
       <section class="section" aria-labelledby="question-title">
         <section class="section" id="survey" aria-labelledby="survey-title">
-  <div class="section-heading">
-    <p class="eyebrow">Share your priorities</p>
-    <h2 id="survey-title">Place one point on each triangle</h2>
-    <p>
-      Choose how much weight each value should receive when making decisions
-      for Society in 2026 and Society in 2060. Each point distributes 100
-      points across the three values. The closer the point is to a corner,
-      the greater the priority given to that value.
-    </p>
-  </div>
+ <div class="section-heading">
+  <p class="eyebrow">Compare society's priorities</p>
+  <h2 id="survey-title">Place one point on each triangle</h2>
+
+  <p>
+    For <strong>Society in 2026</strong>, indicate the relative
+    importance you believe society currently places on Security,
+    Accountability and Fair access.
+  </p>
+
+  <p>
+    For <strong>Society in 2060</strong>, indicate the relative
+    importance you think society will place on the same three
+    values in the imagined future described above.
+  </p>
+
+  <p>
+    Move closer to a corner to give that value more importance.
+    Each triangle divides 100% between the three values.
+  </p>
+</div>
 
   <form id="values-survey">
     <div class="triangle-grid">
@@ -743,8 +754,10 @@
       consentChecks.length === 2 &&
       Array.from(consentChecks).every(box => box.checked);
 
-    submitButton.disabled = !(bothTrianglesSelected && bothBoxesChecked);
-  }
+    submitButton.disabled =
+  Boolean(submitSurvey.started) ||
+  !(bothTrianglesSelected && bothBoxesChecked);
+  
 
   charts.forEach(chart => {
     if (!chart.svg) {
