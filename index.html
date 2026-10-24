@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An imagined 2060 community discussion about security, accountability, and fair access to water and shelter.">
+  <title>Water, Shelter and Shared Decisions | 2060</title>
+
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18332f;
+      --muted: #526762;
+      --paper: #f4f5ef;
+      --card: #ffffff;
+      --green: #1b6255;
+      --green-dark: #12483f;
+      --mint: #dcefe4;
+      --line: #d8e2da;
+      --gold: #c79548;
+      --radius: 20px;
+      --shadow: 0 18px 50px rgba(24, 51, 47, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    a:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 4px;
+    }
+
+    .page-width {
+      width: min(1100px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .wordmark {
+      color: var(--green-dark);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .header-year {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      align-items: center;
+      gap: 50px;
+      padding-block: 78px;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin-bottom: 20px;
+      font-size: clamp(2.7rem, 6vw, 5.2rem);
+      letter-spacing: -0.055em;
+      line-height: 1.02;
+    }
+
+    .hero-intro {
+      max-width: 650px;
+      margin-bottom: 28px;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .button-link {
+      display: inline-block;
+      padding: 13px 20px;
+      border-radius: 999px;
+      background: var(--green);
+      color: #ffffff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .button-link:hover {
+      background: var(--green-dark);
+    }
+
+    .context-card {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .context-card h2 {
+      margin-bottom: 18px;
+      font-size: 1.15rem;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .timeline-item {
+      padding: 16px;
+      border-radius: 14px;
+      background: var(--paper);
+    }
+
+    .timeline-item strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--green-dark);
+      font-size: 1.3rem;
+    }
+
+    .timeline-item span {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .section {
+      padding-block: 64px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin-bottom: 30px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 12px;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      letter-spacing: -0.035em;
+      line-height: 1.12;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .value-card {
+      min-height: 100%;
+      padding: 25px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: 0 8px 24px rgba(24, 51, 47, 0.05);
+    }
+
+    .value-number {
+      display: inline-grid;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 20px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--mint);
+      color: var(--green-dark);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .value-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+    }
+
+    .value-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .question-panel {
+      padding: clamp(25px, 5vw, 48px);
+      border-radius: var(--radius);
+      background: var(--green-dark);
+      color: #ffffff;
+    }
+
+    .question-panel .eyebrow {
+      color: var(--mint);
+    }
+
+    .question-panel h2 {
+      max-width: 760px;
+      margin-bottom: 14px;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+    }
+
+    .question-panel p {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: #e1eee8;
+    }
+
+    .site-footer {
+      padding: 28px 0 40px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding-block: 52px;
+      }
+
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding-block: 48px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .page-width {
+        width: min(100% - 28px, 1100px);
+      }
+
+      .context-card {
+        padding: 20px;
+      }
+
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+    }
+  .triangle-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .triangle-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: 0 8px 24px rgba(24, 51, 47, 0.05);
+    }
+
+    .triangle-card h3 {
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+    }
+
+    .triangle-card > p {
+      color: var(--muted);
+    }
+
+    .ternary-chart {
+      display: block;
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      margin: 12px auto;
+      touch-action: manipulation;
+      cursor: crosshair;
+    }
+
+    .triangle-shape {
+      fill: #f3f8f4;
+      stroke: var(--green);
+      stroke-width: 3;
+    }
+
+    .triangle-grid-lines {
+      fill: none;
+      stroke: #c6d8cd;
+      stroke-width: 1.5;
+      stroke-dasharray: 5 6;
+  pointer-events: none;
+    }
+
+    .triangle-label {
+      fill: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .triangle-point {
+      fill: var(--gold);
+      stroke: #ffffff;
+      stroke-width: 4;
+      pointer-events: none;
+    }
+
+    .allocation-readout {
+      min-height: 48px;
+      margin: 12px 0 0;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: var(--paper);
+      color: var(--green-dark);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .survey-consent {
+      display: grid;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .survey-consent label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--ink);
+    }
+
+    .survey-consent input {
+      width: 18px;
+      height: 18px;
+      margin-top: 4px;
+      accent-color: var(--green);
+      flex: 0 0 auto;
+    }
+
+    .survey-submit {
+      margin-top: 22px;
+      padding: 13px 20px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--green);
+      color: #ffffff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .survey-submit:hover:not(:disabled) {
+      background: var(--green-dark);
+    }
+
+    .survey-submit:disabled {
+      background: #879892;
+      cursor: not-allowed;
+    }
+
+    #survey-status {
+      min-height: 1.65em;
+      margin-top: 14px;
+      color: var(--green-dark);
+      font-weight: 700;
+    }
+
+    @media (max-width: 760px) {
+      .triangle-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="page-width header-inner">
+      <a class="wordmark" href="#top">Shared decisions</a>
+      <span class="header-year">An imagined future · 2060</span>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="page-width">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Water · Shelter · Community</p>
+          <h1 id="page-title">How should we rebuild together?</h1>
+          <p class="hero-intro">
+            In 2055, false AI warnings led the United States to retaliate against
+            Germany, triggering nuclear war. It is now 2060. Surviving communities
+            face danger and shortages of safe water and shelter.
+          </p>
+          <a class="button-link" href="#values">Explore the guiding values</a>
+        </div>
+
+        <aside class="context-card" aria-labelledby="context-title">
+          <h2 id="context-title">A changing world</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <strong>2055</strong>
+              <span>The nuclear war begins</span>
+            </div>
+            <div class="timeline-item">
+              <strong>2060</strong>
+              <span>Communities face shared decisions</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section" id="values" aria-labelledby="values-title">
+        <div class="section-heading">
+          <p class="eyebrow">Our final values</p>
+          <h2 id="values-title">What should guide decisions?</h2>
+          <p>
+            These values frame decisions about protecting people and sharing
+            essential resources across surviving communities.
+          </p>
+        </div>
+
+        <div class="values-grid">
+          <article class="value-card">
+            <span class="value-number" aria-hidden="true">01</span>
+            <h3>Security</h3>
+            <p>protecting people and the water supply from violence, radiation and further attacks.</p>
+          </article>
+
+          <article class="value-card">
+            <span class="value-number" aria-hidden="true">02</span>
+            <h3>Accountability</h3>
+            <p>finding reliable evidence and holding people and institutions responsible for decisions that caused the harm caused by their decisions and failures.</p>
+          </article>
+
+          <article class="value-card">
+            <span class="value-number" aria-hidden="true">03</span>
+            <h3>Fair access</h3>
+            <p>distributing water and shelter fairly. Decision making that is democratic across the surviving human communities is essential.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="question-title">
+        <section class="section" id="survey" aria-labelledby="survey-title">
+  <div class="section-heading">
+    <p class="eyebrow">Share your priorities</p>
+    <h2 id="survey-title">Place one point on each triangle</h2>
+    <p>
+      Choose how much weight each value should receive when making decisions
+      for Society in 2026 and Society in 2060. Each point distributes 100
+      points across the three values. The closer the point is to a corner,
+      the greater the priority given to that value.
+    </p>
+  </div>
+
+  <form id="values-survey">
+    <div class="triangle-grid">
+      <article class="triangle-card">
+        <h3>Society in 2026</h3>
+        <p>Place one point inside the triangle.</p>
+        <svg class="ternary-chart" id="triangle-2026"
+             viewBox="0 0 400 370"
+             aria-label="Triangle for allocating priorities in Society in 2026">
+          <polygon class="triangle-shape" points="200,45 35,310 365,310"></polygon>
+  <g class="triangle-grid-lines" aria-hidden="true">
+  <path d="
+    M68 257 L332 257
+    M101 204 L299 204
+    M134 151 L266 151
+    M167 98 L233 98
+    M167 98 L299 310
+    M134 151 L233 310
+    M101 204 L167 310
+    M68 257 L101 310
+    M233 98 L101 310
+    M266 151 L167 310
+    M299 204 L233 310
+    M332 257 L299 310
+  "></path>
+</g>
+          <circle class="triangle-point" cx="200" cy="221.7" r="9"
+                  visibility="hidden"></circle>
+          <text class="triangle-label" x="200" y="28" text-anchor="middle">Security</text>
+          <text class="triangle-label" x="10" y="345" text-anchor="start">Accountability</text>
+          <text class="triangle-label" x="390" y="345" text-anchor="end">Fair access</text>
+        </svg>
+        <p class="allocation-readout" id="allocation-2026" aria-live="polite">
+          No point selected yet.
+        </p>
+      </article>
+
+      <article class="triangle-card">
+        <h3>Society in 2060</h3>
+        <p>Place one point inside the triangle.</p>
+        <svg class="ternary-chart" id="triangle-2060"
+             viewBox="0 0 400 370"
+             aria-label="Triangle for allocating priorities in Society in 2060">
+          <polygon class="triangle-shape" points="200,45 35,310 365,310"></polygon>
+<g class="triangle-grid-lines" aria-hidden="true">
+  <path d="
+    M68 257 L332 257
+    M101 204 L299 204
+    M134 151 L266 151
+    M167 98 L233 98
+    M167 98 L299 310
+    M134 151 L233 310
+    M101 204 L167 310
+    M68 257 L101 310
+    M233 98 L101 310
+    M266 151 L167 310
+    M299 204 L233 310
+    M332 257 L299 310
+  "></path>
+</g>
+          <circle class="triangle-point" cx="200" cy="221.7" r="9"
+                  visibility="hidden"></circle>
+          <text class="triangle-label" x="200" y="28" text-anchor="middle">Security</text>
+          <text class="triangle-label" x="10" y="345" text-anchor="start">Accountability</text>
+          <text class="triangle-label" x="390" y="345" text-anchor="end">Fair access</text>
+        </svg>
+        <p class="allocation-readout" id="allocation-2060" aria-live="polite">
+          No point selected yet.
+        </p>
+      </article>
+    </div>
+
+    <div class="survey-consent">
+      <label>
+        <input type="checkbox" id="consent" required>
+        I agree to take part in this survey.
+      </label>
+      <label>
+        <input type="checkbox" id="first-time" required>
+        I confirm I have not already submitted this survey.
+      </label>
+    </div>
+
+    <button class="survey-submit" id="survey-submit" type="submit" disabled>
+      Submit both selections
+    </button>
+    <p id="survey-status" role="status" aria-live="polite"></p>
+  </form>
+</section>
+        <div class="question-panel">
+          <p class="eyebrow">The question for 2060</p>
+          <h2 id="question-title">How can communities make fair decisions about water and shelter?</h2>
+          <p>
+            Security, accountability and fair access offer a starting point.
+            Decisions affect every community, so people across those communities
+            need a meaningful say.
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="page-width">
+      Digital Society · Imagining a shared future in 2060
+    </div>
+  </footer>
+<script>
+ const surveyEndpoint = "";
+
+  const charts = [
+    {
+      svg: document.getElementById("triangle-2026"),
+      key: "society2026",
+      label: "Society in 2026"
+    },
+    {
+      svg: document.getElementById("triangle-2060"),
+      key: "society2060",
+      label: "Society in 2060"
+    }
+  ];
+
+  const selections = {
+    society2026: null,
+    society2060: null
+  };
+
+  const submitButton = document.querySelector(".survey-submit");
+  const statusMessage = document.getElementById("survey-status");
+  const consentChecks = document.querySelectorAll(
+    ".survey-consent input[type='checkbox']"
+  );
+
+  function showStatus(message) {
+    if (statusMessage) {
+      statusMessage.textContent = message;
+    }
+  }
+
+  function getVertices(svg) {
+    const polygon = svg.querySelector(".triangle-shape");
+
+    if (!polygon) {
+      return null;
+    }
+
+    const numbers = polygon
+      .getAttribute("points")
+      .trim()
+      .split(/[\s,]+/)
+      .map(Number);
+
+    if (numbers.length !== 6) {
+      return null;
+    }
+
+    const points = [
+      { x: numbers[0], y: numbers[1] },
+      { x: numbers[2], y: numbers[3] },
+      { x: numbers[4], y: numbers[5] }
+    ];
+
+    const top = points.reduce((a, b) => a.y < b.y ? a : b);
+    const bottom = points.filter(point => point !== top);
+    const lowerLeft = bottom.reduce((a, b) => a.x < b.x ? a : b);
+    const lowerRight = bottom.find(point => point !== lowerLeft);
+
+    return [top, lowerLeft, lowerRight];
+  }
+
+  function getWeights(point, vertices) {
+    const [a, b, c] = vertices;
+
+    const denominator =
+      (b.y - c.y) * (a.x - c.x) +
+      (c.x - b.x) * (a.y - c.y);
+
+    const weightA =
+      ((b.y - c.y) * (point.x - c.x) +
+       (c.x - b.x) * (point.y - c.y)) / denominator;
+
+    const weightB =
+      ((c.y - a.y) * (point.x - c.x) +
+       (a.x - c.x) * (point.y - c.y)) / denominator;
+
+    const weightC = 1 - weightA - weightB;
+    const weights = [weightA, weightB, weightC];
+
+    if (weights.some(weight => weight < -0.02)) {
+      return null;
+    }
+
+    return weights.map(weight => Math.max(0, weight));
+  }
+
+  function toPercentages(weights) {
+    const exact = weights.map(weight => weight * 100);
+    const percentages = exact.map(Math.floor);
+    let remaining = 100 - percentages.reduce((sum, value) => sum + value, 0);
+
+    const largestRemainders = exact
+      .map((value, index) => ({
+        index,
+        remainder: value - percentages[index]
+      }))
+      .sort((a, b) => b.remainder - a.remainder);
+
+    for (let i = 0; i < remaining; i++) {
+      percentages[largestRemainders[i].index]++;
+    }
+
+    return {
+      security: percentages[0],
+      accountability: percentages[1],
+      fairAccess: percentages[2]
+    };
+  }
+
+  function updateReadout(chart, allocation) {
+    const card = chart.svg.closest(".triangle-card");
+    const readout = card?.querySelector(".allocation-readout");
+
+    if (readout) {
+      readout.textContent =
+        `Security ${allocation.security}% · ` +
+        `Accountability ${allocation.accountability}% · ` +
+        `Fair access ${allocation.fairAccess}%`;
+    }
+  }
+
+  function updateSubmitButton() {
+    const bothTrianglesSelected =
+      selections.society2026 !== null &&
+      selections.society2060 !== null;
+
+    const bothBoxesChecked =
+      consentChecks.length === 2 &&
+      Array.from(consentChecks).every(box => box.checked);
+
+    submitButton.disabled = !(bothTrianglesSelected && bothBoxesChecked);
+  }
+
+  charts.forEach(chart => {
+    if (!chart.svg) {
+      return;
+    }
+
+    chart.svg.addEventListener("click", event => {
+      const vertices = getVertices(chart.svg);
+      const screenMatrix = chart.svg.getScreenCTM();
+
+      if (!vertices || !screenMatrix) {
+        showStatus("The triangle could not be loaded. Please refresh the page.");
+        return;
+      }
+
+      const svgPoint = chart.svg.createSVGPoint();
+      svgPoint.x = event.clientX;
+      svgPoint.y = event.clientY;
+
+      const point = svgPoint.matrixTransform(screenMatrix.inverse());
+      const weights = getWeights(point, vertices);
+
+      if (!weights) {
+        showStatus("Please click inside the triangle.");
+        return;
+      }
+
+      const allocation = toPercentages(weights);
+      selections[chart.key] = allocation;
+
+      const marker = chart.svg.querySelector(".triangle-point");
+      if (marker) {
+        marker.setAttribute("cx", point.x);
+        marker.setAttribute("cy", point.y);
+          marker.setAttribute("visibility", "visible");
+      }
+
+      updateReadout(chart, allocation);
+      updateSubmitButton();
+      showStatus(`${chart.label} values set.`);
+    });
+  });
+
+  consentChecks.forEach(box => {
+    box.addEventListener("change", updateSubmitButton);
+  });
+
+  function submitSurvey(event) {
+  event.preventDefault();
+
+  showStatus(
+    "Preview mode: data collection is switched off."
+  );
+}
+
+  const surveyForm = submitButton?.closest("form");
+
+  if (surveyForm) {
+    surveyForm.addEventListener("submit", submitSurvey);
+  } else if (submitButton) {
+    submitButton.addEventListener("click", submitSurvey);
+  }
+
+  updateSubmitButton();
+</script>
+</body>
+</html>
