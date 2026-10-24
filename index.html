@@ -886,12 +886,12 @@ return nonNegativeWeights.map(weight => weight / total);
     box.addEventListener("change", updateSubmitButton);
   });
 
- async function submitSurvey(event) {
+ const submittedStorageKey = "mis20070-values-v2-submitted";
+
+async function submitSurvey(event) {
   event.preventDefault();
 
-  if (submitSurvey.started || submitButton.disabled) {
-    return;
-  }
+  if (submitSurvey.started || submitButton.disabled) return;
 
   if (!surveyEndpoint) {
     showStatus("The collector address is missing.");
@@ -900,14 +900,12 @@ return nonNegativeWeights.map(weight => weight / total);
 
   submitSurvey.started = true;
   updateSubmitButton();
-  showStatus("Sending a TEST response...");
+  showStatus("Sending your two answers...");
 
   try {
     const response = await fetch(surveyEndpoint, {
       method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify({
         society2026: selections.society2026,
         society2060: selections.society2060,
@@ -915,31 +913,46 @@ return nonNegativeWeights.map(weight => weight / total);
       })
     });
 
-    if (!response.ok) {
-      throw new Error("The collector could not be reached.");
-    }
+    if (!response.ok) throw new Error("Collector unavailable.");
 
     const result = await response.json();
-
     if (!result || result.ok !== true) {
       throw new Error("No confirmation received.");
     }
 
-    showStatus("The collector replied. Check the TEST tab for the new row.");
+    try {
+      window.localStorage.setItem(submittedStorageKey, "yes");
+    } catch (storageError) {
+      // Some browsers block storage. The current page stays locked.
+    }
+
+    submitButton.textContent = "Response saved";
+    showStatus("Your two answers have been saved. Thank you for taking part.");
   } catch (error) {
-    showStatus("Could not confirm the TEST response. Check the TEST tab before trying again.");
+    submitButton.textContent = "Submission unconfirmed";
+    showStatus("We could not confirm whether your answers were saved. Please contact the person who shared this survey before trying again.");
   }
 }
 
-  const surveyForm = submitButton?.closest("form");
+const surveyForm = submitButton?.closest("form");
 
-  if (surveyForm) {
-    surveyForm.addEventListener("submit", submitSurvey);
-  } else if (submitButton) {
-    submitButton.addEventListener("click", submitSurvey);
+if (surveyForm) {
+  surveyForm.addEventListener("submit", submitSurvey);
+} else if (submitButton) {
+  submitButton.addEventListener("click", submitSurvey);
+}
+
+try {
+  if (window.localStorage.getItem(submittedStorageKey) === "yes") {
+    submitSurvey.started = true;
+    submitButton.textContent = "Response saved";
+    showStatus("A response has already been submitted in this browser. Thank you.");
   }
+} catch (storageError) {
+  // The survey still works when browser storage is unavailable.
+}
 
-  updateSubmitButton();
+updateSubmitButton();
 </script>
 </body>
 </html>
