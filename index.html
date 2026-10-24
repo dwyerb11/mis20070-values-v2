@@ -757,7 +757,10 @@
     submitButton.disabled =
   Boolean(submitSurvey.started) ||
   !(bothTrianglesSelected && bothBoxesChecked);
-  
+    submitButton.disabled =
+      Boolean(submitSurvey.started) ||
+      !(bothTrianglesSelected && bothBoxesChecked);
+  }
 
   charts.forEach(chart => {
     if (!chart.svg) {
