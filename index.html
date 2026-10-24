@@ -792,12 +792,49 @@
     box.addEventListener("change", updateSubmitButton);
   });
 
-  function submitSurvey(event) {
+ async function submitSurvey(event) {
   event.preventDefault();
 
-  showStatus(
-    "Preview mode: data collection is switched off."
-  );
+  if (submitSurvey.started || submitButton.disabled) {
+    return;
+  }
+
+  if (!surveyEndpoint) {
+    showStatus("The collector address is missing.");
+    return;
+  }
+
+  submitSurvey.started = true;
+  updateSubmitButton();
+  showStatus("Sending a TEST response...");
+
+  try {
+    const response = await fetch(surveyEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        society2026: selections.society2026,
+        society2060: selections.society2060,
+        consent: document.getElementById("consent").checked
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("The collector could not be reached.");
+    }
+
+    const result = await response.json();
+
+    if (!result || result.ok !== true) {
+      throw new Error("No confirmation received.");
+    }
+
+    showStatus("The collector replied. Check the TEST tab for the new row.");
+  } catch (error) {
+    showStatus("Could not confirm the TEST response. Check the TEST tab before trying again.");
+  }
 }
 
   const surveyForm = submitButton?.closest("form");
