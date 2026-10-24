@@ -785,7 +785,10 @@
       return null;
     }
 
-    return weights.map(weight => Math.max(0, weight));
+const nonNegativeWeights = weights.map(weight => Math.max(0, weight));
+const total = nonNegativeWeights.reduce((sum, weight) => sum + weight, 0);
+
+return nonNegativeWeights.map(weight => weight / total);
   }
 
   function toPercentages(weights) {
